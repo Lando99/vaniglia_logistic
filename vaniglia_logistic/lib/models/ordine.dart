@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vaniglia_logistic/screen/services/database.dart';
 
 
+/// Classe che contiene informazioni relativo a un ORDINAZIONE
 class Ordine{
 
   String id;
