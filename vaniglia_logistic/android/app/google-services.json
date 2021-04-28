@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "881990772304",
+    "firebase_url": "https://vaniglia-logistic.firebaseio.com",
+    "project_id": "vaniglia-logistic",
+    "storage_bucket": "vaniglia-logistic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881990772304:android:da5aebe2111380860a9355",
+        "android_client_info": {
+          "package_name": "com.matteolando.vaniglia_logistic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881990772304-49r8df0c5m0q1oeqpm9spn136ej4q1hi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV52jUC43wW7CA6HWiw6paXo-n32JPxXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881990772304-49r8df0c5m0q1oeqpm9spn136ej4q1hi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
