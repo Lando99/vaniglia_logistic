@@ -2,16 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_group_sliver/flutter_group_sliver.dart';
 import 'package:vaniglia_logistic/models/prodotti.dart';
-import 'package:vaniglia_logistic/screen/order/makeQuantity.dart';
-import 'package:vaniglia_logistic/screen/order/components/productTile.dart';
-import 'package:vaniglia_logistic/screen/order/screenArguments.dart';
-import 'package:vaniglia_logistic/screen/order/selectUtente.dart';
-import 'package:vaniglia_logistic/screen/services/database.dart';
-import 'package:vaniglia_logistic/screen/services/database.dart';
-import 'package:vaniglia_logistic/screen/services/database.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/components/productTile.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/screenArguments.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/selectUtente.dart';
 import 'package:vaniglia_logistic/shared/loading.dart';
 import 'package:vaniglia_logistic/shared/routes.dart';
-import '../../constants.dart' as Constants;
+import 'package:vaniglia_logistic/constants.dart' as Constants;
 import 'components/WarningMessage.dart';
 
 

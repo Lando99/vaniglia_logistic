@@ -1,12 +1,9 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:vaniglia_logistic/models/ordine.dart';
-import 'package:vaniglia_logistic/models/user.dart';
-import 'package:vaniglia_logistic/screen/services/database.dart';
-import 'package:vaniglia_logistic/screen/order/makeQuantity.dart';
+import 'package:vaniglia_logistic/services/database.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/makeQuantity.dart';
 
 class AuthService{
   final FirebaseAuth _auth = FirebaseAuth.instance;

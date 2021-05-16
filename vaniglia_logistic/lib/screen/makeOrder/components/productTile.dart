@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vaniglia_logistic/models/prodotti.dart';
-import 'package:vaniglia_logistic/screen/order/makeOrder.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/makeOrder.dart';
 
-import '../../../constants.dart' as Constants;
+import 'package:vaniglia_logistic/constants.dart' as Constants;
 
 // INPUT : p prodotto da rappresentare
 // state e' una funzione passata per fare un setState al widget parent

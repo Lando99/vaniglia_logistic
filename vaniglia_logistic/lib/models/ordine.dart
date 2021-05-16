@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vaniglia_logistic/models/prodotti.dart';
-import 'package:vaniglia_logistic/models/user.dart';
-import 'package:vaniglia_logistic/screen/order/makeQuantity.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:vaniglia_logistic/screen/services/database.dart';
+import 'package:vaniglia_logistic/screen/makeOrder//makeQuantity.dart';
 
 
 /// Classe che contiene informazioni relativo a un ORDINAZIONE

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaniglia_logistic/models/user.dart';
 import 'package:vaniglia_logistic/screen/authenticate/register.dart';
-import 'package:vaniglia_logistic/screen/home/lista_utenti.dart';
-import 'package:vaniglia_logistic/screen/services/auth.dart';
-import 'package:vaniglia_logistic/screen/services/database.dart';
+import 'package:vaniglia_logistic/screen/manageUtenti/lista_utenti.dart';
+import 'package:vaniglia_logistic/services/auth.dart';
+import 'package:vaniglia_logistic/services/database.dart';
 import 'package:vaniglia_logistic/shared/loading.dart';
 import 'package:vaniglia_logistic/shared/makeDrawer.dart';
 

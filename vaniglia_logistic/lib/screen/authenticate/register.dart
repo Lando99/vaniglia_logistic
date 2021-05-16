@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vaniglia_logistic/screen/services/auth.dart';
+import 'package:vaniglia_logistic/services/auth.dart';
 import 'package:vaniglia_logistic/shared/constants.dart';
 import 'package:vaniglia_logistic/shared/loading.dart';
 

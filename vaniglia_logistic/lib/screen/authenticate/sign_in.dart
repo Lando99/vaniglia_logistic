@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vaniglia_logistic/screen/services/auth.dart';
+import 'package:vaniglia_logistic/services/auth.dart';
 import 'package:vaniglia_logistic/shared/constants.dart';
 import 'package:vaniglia_logistic/shared/loading.dart';
 
@@ -118,7 +118,8 @@ class _SingInState extends State<SingIn> {
 
               ),
               SizedBox(height: 20.0),
-              /*
+
+              /**TODO: Remove button, use unly for test*/
               ElevatedButton(
                 onPressed: ()async{
                   dynamic result = await _auth.signInWithEmailAndPassword("admin@vaniglia.it", "password");
@@ -128,7 +129,7 @@ class _SingInState extends State<SingIn> {
                   style: TextStyle(color: Colors.white),
                 ),
               )
-              */
+
 
 
             ],

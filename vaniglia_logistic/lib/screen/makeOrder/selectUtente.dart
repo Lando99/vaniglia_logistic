@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vaniglia_logistic/shared/routes.dart';
 
-import '../../constants.dart' as Constants;
+import 'package:vaniglia_logistic/constants.dart' as Constants;
 
 
 

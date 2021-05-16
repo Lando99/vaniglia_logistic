@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaniglia_logistic/models/user.dart';
-import 'package:vaniglia_logistic/screen/home/utente_tile.dart';
+import 'package:vaniglia_logistic/screen/manageUtenti/utente_tile.dart';
 
 class ListaUtenti extends StatefulWidget {
   @override

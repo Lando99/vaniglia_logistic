@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vaniglia_logistic/models/user.dart';
 import 'package:vaniglia_logistic/screen/home/home.dart';
-import 'package:vaniglia_logistic/screen/home/preference.dart';
+import 'package:vaniglia_logistic/screen/impostazioni/preference.dart';
 import 'package:vaniglia_logistic/shared/routes.dart';
 import '../../constants.dart' as Constants;
 
 
+/**
+ * #Drawer per l'applicazione
+ * Mostra un elenco delle schermate a cui si puo' accedere
+ * Viene passato un parametro [user] per rendere visibili determinate schermate a seconda della tipologia di permessi
+ * che ha quel utente
+ * */
 class MakeDrawer extends StatelessWidget  {
 
   final Utente _user;
@@ -112,6 +118,7 @@ class MakeDrawer extends StatelessWidget  {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, Routes.deliveries);
+
               },
             ) : null,
           ),

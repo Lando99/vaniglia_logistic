@@ -1,11 +1,9 @@
 
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:vaniglia_logistic/models/ordine.dart';
 import 'package:vaniglia_logistic/models/user.dart';
-import 'package:vaniglia_logistic/screen/order/makeQuantity.dart';
-import 'package:vaniglia_logistic/models/prodotti.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/makeQuantity.dart';
 
 class DatabaseService {
 

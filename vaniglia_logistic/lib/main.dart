@@ -1,26 +1,21 @@
-import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vaniglia_logistic/models/user.dart';
 import 'package:vaniglia_logistic/screen/authenticate/authenticate.dart';
 import 'package:vaniglia_logistic/screen/authenticate/register.dart';
 import 'package:vaniglia_logistic/screen/deliveries/deliveries.dart';
-import 'package:vaniglia_logistic/screen/home/Ordini.dart';
+import 'package:vaniglia_logistic/screen/viewOrdini/viewOrdini.dart';
 import 'package:vaniglia_logistic/screen/home/home.dart';
 import 'package:vaniglia_logistic/screen/manageUtenti/manageUtenti.dart';
-import 'package:vaniglia_logistic/screen/order/makeOrder.dart';
-import 'package:vaniglia_logistic/screen/order/selectUtente.dart';
-import 'package:vaniglia_logistic/screen/services/auth.dart';
-import 'screen/order/makeQuantity.dart';
-import 'screen/order/confirmOrder.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/makeOrder.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/selectUtente.dart';
+import 'screen/makeOrder/makeQuantity.dart';
+import 'screen/makeOrder/confirmOrder.dart';
 
-import 'screen/home/preference.dart';
+import 'screen/impostazioni/preference.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'screen/home/Ordini.dart';
+import 'screen/viewOrdini/viewOrdini.dart';
 
 
 

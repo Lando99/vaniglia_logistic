@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:vaniglia_logistic/screen/home/home.dart';
-import 'package:vaniglia_logistic/screen/order/makeQuantity.dart';
-import 'package:vaniglia_logistic/screen/services/auth.dart';
-import 'package:vaniglia_logistic/screen/home/home.dart';
-import '../../constants.dart' as Constants;
+import 'package:vaniglia_logistic/screen/makeOrder/makeQuantity.dart';
+import 'package:vaniglia_logistic/services/auth.dart';
 import 'makeOrder.dart';
 
+
+import 'package:vaniglia_logistic/constants.dart' as Constants;
 
 class ConfirmOrder extends StatefulWidget {
 
@@ -68,7 +67,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           });
           prodottiScelti = [];
 
-          dynamic result = await _auth.addOrder(utente, prodotti);
+          dynamic result = await _auth.addOrder(utente, prodotti );
           ///TODO: inserire azioni di controllo in result
 
           Navigator.popUntil(context, ModalRoute.withName('/'));

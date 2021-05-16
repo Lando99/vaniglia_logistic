@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:vaniglia_logistic/models/prodotti.dart';
-import 'package:vaniglia_logistic/screen/order/confirmOrder.dart';
-import 'package:vaniglia_logistic/screen/order/screenArguments.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/screenArguments.dart';
 import 'package:vaniglia_logistic/shared/routes.dart';
-import '../../constants.dart' as Constants;
-import 'makeOrder.dart';
+import 'package:vaniglia_logistic/constants.dart' as Constants;
+
 
 List<int> numbers = [1,2,3,4,5,6,7,8,9];
 
-
+/**
+ * #View per selezionare le quantita' di merce che vogliamo ordinare
+ *
+ * */
 class MakeQuantity extends StatefulWidget {
 
   static const String routeName = "/MakeQuantity";
