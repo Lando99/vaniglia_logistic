@@ -147,7 +147,10 @@ class _ListaOrdiniState extends State<ListaOrdini> {
                   headerBuilder: (BuildContext context, bool isExpanded) {
                     return ListTile(
                         tileColor: item.color,
-                        leading: Icon(Icons.autorenew_outlined, color: Colors.white,),
+                        leading: Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Icon(Icons.autorenew_outlined, color: Colors.white, ),
+                        ),
                         title: item.headerValue
                     );
                   },
@@ -187,7 +190,10 @@ class _ListaOrdiniState extends State<ListaOrdini> {
 
                     return  ListTile(
                         tileColor: item.color,
-                        leading: Icon(Icons.bookmark_border,color: Constants.lightBrown,),
+                        leading: Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Icon(Icons.bookmark_border,color: Constants.lightBrown,),
+                        ),
                         title: item.headerValue,
                       ///TODO: Implementare onLongPress per fare l'eliminazione
 
@@ -292,8 +298,11 @@ List<Item> generateItems(List<Ordine> ordini) {
       Container(
         padding: EdgeInsets.all(20),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            //Prima colonna
             Column(
               children: [
                 Text(
@@ -315,13 +324,21 @@ List<Item> generateItems(List<Ordine> ordini) {
 
               ],
             ),
-
+            //Seconda colonna
             Column(
+
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                IconButton(
-                  icon: new Icon(Icons.delete),
-                  highlightColor: Colors.pink,
-                  onPressed: (){},
+
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: new Icon(Icons.delete),
+                    onPressed: (){
+                      //TODO: Richiamara la funzione di eliminazione dell'ordine
+
+                    },
+                  ),
                 ),
               ],
             ),
@@ -344,13 +361,13 @@ List<Item> generateItems(List<Ordine> ordini) {
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
                           child: Text(
-                              ordini[index].prodotti_quantita[indexP].p.nome,
+                              ordini[index].prodotti_quantita[indexP].p.nome ,
                           ),
                         ),
                       ],
                     ),
                     Text(
-                        ordini[index].prodotti_quantita[indexP].qta.toString()
+                        ordini[index].prodotti_quantita[indexP].qta.toString() + " Kg"
                     )
                   ],
                 );

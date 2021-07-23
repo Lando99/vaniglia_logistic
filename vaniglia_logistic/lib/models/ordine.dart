@@ -1,7 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vaniglia_logistic/models/prodotti.dart';
-import 'package:vaniglia_logistic/screen/makeOrder//makeQuantity.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/makeQuantity.dart';
 
 
 /// Classe che contiene informazioni relativo a un ORDINAZIONE

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaniglia_logistic/models/ordine.dart';
 import 'package:vaniglia_logistic/models/user.dart';
+import 'package:vaniglia_logistic/screen/home/homeComponets/CardStatistic.dart';
 import 'package:vaniglia_logistic/services/auth.dart';
 import 'package:vaniglia_logistic/shared/loading.dart';
 import 'package:vaniglia_logistic/shared/makeDrawer.dart';
@@ -41,7 +42,11 @@ class Home extends StatelessWidget {
       future: utenti.doc(_auth.getUid()).get(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
+
+
           Map<String, dynamic> data = snapshot.data.data();
+
+
 
           Utente _user = Utente(uid: data.keys.toString(), email: data['email'], ruolo: data['ruolo'] );
           Routes.utente = Utente(uid: data.keys.toString(), email: data['email'], ruolo: data['ruolo'] );
@@ -82,13 +87,16 @@ class Home extends StatelessWidget {
                     padding: EdgeInsets.all(25),
                     child: Column(
                       children: [
-                        CardProgressionElaborazione(auth: _auth,ordiniElaborazione: ordiniElaborazione)
+                        CardProgressionElaborazione(auth: _auth,ordiniElaborazione: ordiniElaborazione),
+                        CardStatistic()
                       ],
                     ),
                   );
                 }
             ),
           );
+
+
 
         }else{
           return Loading();

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vaniglia_logistic/models/prodotti.dart';
 import 'package:vaniglia_logistic/screen/makeOrder/makeQuantity.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/selectUtente.dart';
 import 'package:vaniglia_logistic/services/auth.dart';
 import 'makeOrder.dart';
 
@@ -22,12 +24,18 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   Widget build(BuildContext context) {
 
 
+    List<Prodotto_Quantita> lista = [ Prodotto_Quantita(p: Prodotto(nome: "pera"), qta: 2)];
+    final ScreenArgumentsArgs argomenti = ModalRoute.of(context).settings.arguments;
 
-    final ScreenArgumentsArgs args = ModalRoute.of(context).settings.arguments;
+    //ScreenArgumentsArgs("Ipercity", lista );
 
-    final String utente = args.utente;
 
-    final List<Prodotto_Quantita> prodotti = args.prodotti;
+
+    //final ScreenArgumentsArgs args = ModalRoute.of(context).settings.arguments;
+
+    final String utente = Global.u;
+
+    final List<Prodotto_Quantita> prodotti = argomenti.prodotti;
 
 
 

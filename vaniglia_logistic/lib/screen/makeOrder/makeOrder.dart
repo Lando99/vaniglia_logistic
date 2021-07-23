@@ -289,7 +289,7 @@ class _MakeOrderState extends State<MakeOrder> {
         ),
         floatingActionButton: prodottiScelti.length != 0 ? FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(
+            Navigator.pushReplacementNamed(
                 context,
                 Routes.makeQuantity,
                 arguments: ScreenArguments(Global.u, prodottiScelti),

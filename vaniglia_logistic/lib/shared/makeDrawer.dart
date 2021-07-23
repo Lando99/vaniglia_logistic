@@ -147,7 +147,7 @@ class MakeDrawer extends StatelessWidget  {
           ),
           Divider(),
           ListTile(
-            title: Text('0.0.4'),
+            title: Text('0.0.5'),
           ),
         ],
       ),

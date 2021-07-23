@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../../constants.dart' as Constants;
+import 'events_example.dart';
+import 'utils.dart';
 
 
 class SettingsForm extends StatefulWidget {
@@ -10,13 +13,16 @@ class SettingsForm extends StatefulWidget {
 
 class _SettingsFormState extends State<SettingsForm> {
 
+  // Variabili del calendario
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  DateTime _focusedDay = DateTime.now();
+  DateTime _selectedDay;
 
-  List<bool> isSwitches = [false,false,false,false,false,false,false];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Constants.mediumBrown,
+      backgroundColor: Constants.lightBrown,
       appBar: AppBar(
           backgroundColor: Constants.lightBrown,
           elevation: 0.0,
@@ -30,129 +36,52 @@ class _SettingsFormState extends State<SettingsForm> {
             },
           )
       ),
-      body: Column(
-        children: [
+      body:
+      TableEventsExample()
+/*
+      TableCalendar(
+        firstDay: DateTime.utc(2021, 7, 1),
+        lastDay: DateTime.utc(2030, 3, 14),
+        focusedDay: _focusedDay,
+        calendarFormat: _calendarFormat,
+        selectedDayPredicate: (day) {
+          // Use `selectedDayPredicate` to determine which day is currently selected.
+          // If this returns true, then `day` will be marked as selected.
 
-          Text('Giorni di consegna'),
-
-          Row(
-            children: [
-              Switch(
-                value: isSwitches[0],
-                onChanged: (value){
-                  setState(() {
-                    isSwitches[0]=value;
-                    print(isSwitches[0]);
-                  });
-                },
-                activeTrackColor: Constants.darkBrown,
-                activeColor: Constants.lightBrown,
-              ),
-              Text("Lunedí")
-            ],
-          ),
-          Row(
-            children: [
-              Switch(
-                value: isSwitches[1],
-                onChanged: (value){
-                  setState(() {
-                    isSwitches[1]=value;
-                    print(isSwitches[1]);
-                  });
-                },
-                activeTrackColor: Constants.darkBrown,
-                activeColor: Constants.lightBrown,
-              ),
-              Text("Martedí")
-            ],
-          ),
-          Row(
-            children: [
-              Switch(
-                value: isSwitches[2],
-                onChanged: (value){
-                  setState(() {
-                    isSwitches[2]=value;
-                    print(isSwitches[2]);
-                  });
-                },
-                activeTrackColor: Constants.darkBrown,
-                activeColor: Constants.lightBrown,
-              ),
-              Text("Mercoledí")
-            ],
-          ),
-          Row(
-            children: [
-              Switch(
-                value: isSwitches[3],
-                onChanged: (value){
-                  setState(() {
-                    isSwitches[3]=value;
-                    print(isSwitches[3]);
-                  });
-                },
-                activeTrackColor: Constants.darkBrown,
-                activeColor: Constants.lightBrown,
-              ),
-              Text("Giovedí")
-            ],
-          ),
-          Row(
-            children: [
-              Switch(
-                value: isSwitches[4],
-                onChanged: (value){
-                  setState(() {
-                    isSwitches[4]=value;
-                    print(isSwitches[4]);
-                  });
-                },
-                activeTrackColor: Constants.darkBrown,
-                activeColor: Constants.lightBrown,
-              ),
-              Text("Venerdí")
-            ],
-          ),
-          Row(
-            children: [
-              Switch(
-                value: isSwitches[5],
-                onChanged: (value){
-                  setState(() {
-                    isSwitches[5]=value;
-
-                  });
-                },
-                activeTrackColor: Constants.darkBrown,
-                activeColor: Constants.lightBrown,
-              ),
-              Text("Sabato")
-            ],
-          ),
-          Row(
-            children: [
-              Switch(
-                value: isSwitches[6],
-                onChanged: (value){
-                  setState(() {
-                    isSwitches[6]=value;
-                  });
-                },
-                activeTrackColor: Constants.darkBrown,
-                activeColor: Constants.lightBrown,
-              ),
-              Text("Domenica")
-            ],
-          )
-
-
-
-
-        ],
+          // Using `isSameDay` is recommended to disregard
+          // the time-part of compared DateTime objects.
+          return isSameDay(_selectedDay, day);
+        },
+        onDaySelected: (selectedDay, focusedDay) {
+          if (!isSameDay(_selectedDay, selectedDay)) {
+            // Call `setState()` when updating the selected day
+            setState(() {
+              _selectedDay = selectedDay;
+              _focusedDay = focusedDay;
+            });
+          }
+        },
+        onFormatChanged: (format) {
+          if (_calendarFormat != format) {
+            // Call `setState()` when updating calendar format
+            setState(() {
+              _calendarFormat = format;
+            });
+          }
+        },
+        onPageChanged: (focusedDay) {
+          // No need to call `setState()` here
+          _focusedDay = focusedDay;
+        },
       ),
+
+ */
+
     );
   }
 }
+
+
+
+
 

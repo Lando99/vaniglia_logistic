@@ -4,6 +4,8 @@ import 'package:vaniglia_logistic/screen/makeOrder/screenArguments.dart';
 import 'package:vaniglia_logistic/shared/routes.dart';
 import 'package:vaniglia_logistic/constants.dart' as Constants;
 
+import 'confirmOrder.dart';
+
 
 List<int> numbers = [1,2,3,4,5,6,7,8,9];
 
@@ -63,11 +65,15 @@ class _MakeQuantityState extends State<MakeQuantity> {
         child: Icon(Icons.navigate_next_rounded),
         backgroundColor: Constants.red,
         onPressed: (){
-          Navigator.pushNamed(
+
+
+          Navigator.pushReplacementNamed(
               context,
               Routes.confirmOrder,
               arguments: ScreenArgumentsArgs(utente, prodotti_quantita),
           );
+
+
         },
       ),
     );

@@ -119,10 +119,10 @@ class _SingInState extends State<SingIn> {
               ),
               SizedBox(height: 20.0),
 
-              /**TODO: Remove button, use unly for test*/
+              /**TODO: Remove button, use only for test*/
               ElevatedButton(
                 onPressed: ()async{
-                  dynamic result = await _auth.signInWithEmailAndPassword("admin@vaniglia.it", "password");
+                  dynamic result = await _auth.signInWithEmailAndPassword("admin@vaniglia.com", "vaniglia");
                 },
                 child: Text(
                   'Admin',
