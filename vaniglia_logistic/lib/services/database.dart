@@ -1,6 +1,7 @@
 
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:vaniglia_logistic/models/evento.dart';
 import 'package:vaniglia_logistic/models/ordine.dart';
 import 'package:vaniglia_logistic/models/user.dart';
 import 'package:vaniglia_logistic/screen/makeOrder/makeQuantity.dart';
@@ -10,9 +11,10 @@ class DatabaseService {
   final String uid;
   DatabaseService({ this.uid });
 
-  /// Tabelle database: utenti
+  /// Tabelle database
   final CollectionReference utenti = FirebaseFirestore.instance.collection('utenti');
   final CollectionReference ordini = FirebaseFirestore.instance.collection('ordini');
+  final CollectionReference calendario = FirebaseFirestore.instance.collection('calendario');
 
 
 
@@ -129,6 +131,7 @@ class DatabaseService {
   }
 
 
+  // ** Lettura ordini **
   List<Ordine> _ordiniFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc){
 
@@ -148,7 +151,7 @@ class DatabaseService {
     }).toList();
   }
 
-  // Stream sul database
+  // Stream ordini
   Stream<List<Ordine>> get ordiniStream{
     return ordini.snapshots()
         .map(_ordiniFromSnapshot);
@@ -185,6 +188,36 @@ class DatabaseService {
   }
 
 
+
+  // ** Metodi tabella calendario **
+  List<Evento> _eventiCalendarioFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((doc){
+
+      Evento aux;
+
+      aux =  Evento(
+        id : doc.id,
+        date : doc.data()['data'] ?? null,
+      );
+      print(aux.id);
+
+      return aux;
+    }).toList();
+  }
+
+  // Stream eventi calendario
+ Stream<List<Evento>> eventiCalendarioStream(int anno, int mese){
+
+    // Calcolo il primo e ultimo giorno del mese
+    var firstDayOfMonth = new DateTime(anno, mese, 1);
+    var lastDayOfMonth = new DateTime(firstDayOfMonth.year, firstDayOfMonth.month + 1, firstDayOfMonth.day-1);
+
+
+    return calendario.where('data', isGreaterThanOrEqualTo: firstDayOfMonth).where('data', isLessThanOrEqualTo: lastDayOfMonth).snapshots().map(_eventiCalendarioFromSnapshot);
+
+  }
+
+// where('data', isGreaterThanOrEqualTo: firstDayOfMonth).where('data', isLessThanOrEqualTo: lastDayOfMonth)
 
 }
 

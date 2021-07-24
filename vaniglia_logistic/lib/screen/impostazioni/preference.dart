@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:vaniglia_logistic/models/evento.dart';
+import 'package:vaniglia_logistic/services/database.dart';
 import '../../constants.dart' as Constants;
-import 'events_example.dart';
+import 'package:vaniglia_logistic/screen/impostazioni/events_example.dart';
 import 'utils.dart';
 
 
@@ -13,10 +16,7 @@ class SettingsForm extends StatefulWidget {
 
 class _SettingsFormState extends State<SettingsForm> {
 
-  // Variabili del calendario
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
-  DateTime _selectedDay;
+
 
 
   @override
@@ -37,51 +37,215 @@ class _SettingsFormState extends State<SettingsForm> {
           )
       ),
       body:
-      TableEventsExample()
-/*
-      TableCalendar(
-        firstDay: DateTime.utc(2021, 7, 1),
-        lastDay: DateTime.utc(2030, 3, 14),
-        focusedDay: _focusedDay,
-        calendarFormat: _calendarFormat,
-        selectedDayPredicate: (day) {
-          // Use `selectedDayPredicate` to determine which day is currently selected.
-          // If this returns true, then `day` will be marked as selected.
+      StreamProvider<List<Evento>>.value(
+          value: DatabaseService().eventiCalendarioStream( focusedDay.year, focusedDay.month),
+          initialData: [],
+          builder: (context, snapshot) {
 
-          // Using `isSameDay` is recommended to disregard
-          // the time-part of compared DateTime objects.
-          return isSameDay(_selectedDay, day);
-        },
-        onDaySelected: (selectedDay, focusedDay) {
-          if (!isSameDay(_selectedDay, selectedDay)) {
-            // Call `setState()` when updating the selected day
-            setState(() {
-              _selectedDay = selectedDay;
-              _focusedDay = focusedDay;
-            });
+
+            List<Evento> eventi = Provider.of<List<Evento>>(context);
+
+
+            eventi.forEach((element) =>
+
+                kEvents.addAll(Map.fromIterable(List.generate(1, (index) => index),
+                    key: (item) => element.date.toDate(),
+                    value: (item) => List.generate(
+                        1, (index) => Event('Consegna')
+                    )
+                ))
+
+
+
+            );
+
+
+
+            return TableEventsExample(parent: this,);
           }
-        },
-        onFormatChanged: (format) {
-          if (_calendarFormat != format) {
-            // Call `setState()` when updating calendar format
-            setState(() {
-              _calendarFormat = format;
-            });
-          }
-        },
-        onPageChanged: (focusedDay) {
-          // No need to call `setState()` here
-          _focusedDay = focusedDay;
-        },
       ),
-
- */
+      //TableEventsExample()
 
     );
   }
 }
 
 
+
+
+DateTime focusedDay = DateTime.now();
+
+class TableEventsExample extends StatefulWidget {
+
+
+  _SettingsFormState parent;
+  TableEventsExample({this.parent});
+  @override
+  _TableEventsExampleState createState() => _TableEventsExampleState();
+}
+
+class _TableEventsExampleState extends State<TableEventsExample> {
+  ValueNotifier<List<Event>> _selectedEvents = null;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
+      .toggledOff; // Can be toggled on/off by longpressing a date
+
+
+
+
+
+  DateTime _selectedDay;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedDay = focusedDay;
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay));
+  }
+
+  @override
+  void dispose() {
+    _selectedEvents.dispose();
+    super.dispose();
+  }
+
+
+
+  List<Event> _getEventsForDay(DateTime day) {
+    // Implementation example
+    return kEvents[day] ?? [];
+  }
+
+
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay_aux) {
+    if (!isSameDay(_selectedDay, selectedDay)) {
+      setState(() {
+
+
+        _selectedDay = selectedDay;
+        focusedDay = focusedDay_aux;
+        _rangeSelectionMode = RangeSelectionMode.toggledOff;
+
+        widget.parent.setState(() {
+
+        });
+      });
+
+      _selectedEvents.value = _getEventsForDay(selectedDay);
+    }
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TableCalendar<Event>(
+          firstDay: kFirstDay,
+          lastDay: kLastDay,
+          focusedDay: focusedDay,
+          selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+
+          calendarFormat: _calendarFormat,
+          rangeSelectionMode: _rangeSelectionMode,
+          eventLoader: _getEventsForDay,
+          startingDayOfWeek: StartingDayOfWeek.monday,
+          calendarStyle: CalendarStyle(
+            // Use `CalendarStyle` to customize the UI
+            outsideDaysVisible: false,
+          ),
+          onDaySelected: _onDaySelected,
+          onFormatChanged: (format) {
+            if (_calendarFormat != format) {
+              setState(() {
+                _calendarFormat = format;
+              });
+            }
+          },
+          onPageChanged: (focusedDay_aux) {
+
+            widget.parent.setState(() {
+
+            });
+            focusedDay = focusedDay_aux;
+
+
+          },
+        ),
+        const SizedBox(height: 8.0),
+        Expanded(
+          child: ValueListenableBuilder<List<Event>>(
+            valueListenable: _selectedEvents,
+            builder: (context, value, _) {
+
+
+
+              if(value.length == 0){
+
+
+                return Center(
+                  child: Column(
+                    //mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ElevatedButton(
+
+                        onPressed: () {
+                          setState(() {
+
+
+                            kEvents.addAll(Map.fromIterable(List.generate(1, (index) => index),
+                                key: (item) => _selectedDay,
+                                value: (item) => List.generate(
+                                    1, (index) => Event('Consegna')
+                                )
+                            )
+                            );
+                            value.add(Event("Consegna"));
+
+                          }
+
+
+                          );
+
+                        },
+                        child: const Text('Aggiungi consegna'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              // Genero la lista degli eventi
+              return ListView.builder(
+                itemCount: value.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                      vertical: 4.0,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: ListTile(
+                      onTap: () => print('${value[index]}'),
+                      title: Text('${value[index]}'),
+                    ),
+                  );
+
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 
 

@@ -1,4 +1,4 @@
-
+/// Classe Prodotto
 class Prodotto{
 
    String nome; //id utente

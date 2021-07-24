@@ -1,12 +1,18 @@
-// Copyright 2019 Aleksander Woźniak
-// SPDX-License-Identifier: Apache-2.0
+
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import 'package:vaniglia_logistic/screen/impostazioni/preference.dart';
+/*
 import 'utils.dart';
+
+
+DateTime focusedDay = DateTime.now();
+
 class TableEventsExample extends StatefulWidget {
 
+
+  _SettingsFormState parent;
 
 
   @override
@@ -18,14 +24,18 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
-  DateTime _focusedDay = DateTime.now();
+
+
+
+
+
   DateTime _selectedDay;
 
   @override
   void initState() {
     super.initState();
 
-    _selectedDay = _focusedDay;
+    _selectedDay = focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay));
   }
 
@@ -35,6 +45,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     super.dispose();
   }
 
+
+
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
     return kEvents[day] ?? [];
@@ -42,11 +54,11 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
 
 
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay_aux) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
         _selectedDay = selectedDay;
-        _focusedDay = focusedDay;
+        focusedDay = focusedDay_aux;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
 
@@ -63,7 +75,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
           TableCalendar<Event>(
             firstDay: kFirstDay,
             lastDay: kLastDay,
-            focusedDay: _focusedDay,
+            focusedDay: focusedDay,
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
 
             calendarFormat: _calendarFormat,
@@ -83,7 +95,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
               }
             },
             onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
+              print("cambio pagina $focusedDay");
+
+              focusedDay = focusedDay;
             },
           ),
           const SizedBox(height: 8.0),
@@ -102,7 +116,6 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                       //mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         ElevatedButton(
-
 
                           onPressed: () {
                             setState(() {
@@ -158,3 +171,5 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       );
   }
 }
+
+ */
