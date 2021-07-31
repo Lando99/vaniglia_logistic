@@ -127,6 +127,7 @@ class AuthService{
     try{
       DateTime now = new DateTime.now();
       DateTime date = new DateTime(now.year, now.month, now.day, now.hour, now.minute);
+
       await DatabaseService(uid: _auth.currentUser.uid).updateOrdiniData(utente, date, list);
     }catch(e){
       print(e);

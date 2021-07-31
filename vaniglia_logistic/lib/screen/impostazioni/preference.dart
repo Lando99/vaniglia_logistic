@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:vaniglia_logistic/models/evento.dart';
 import 'package:vaniglia_logistic/services/database.dart';
+import 'package:vaniglia_logistic/shared/routes.dart';
 import '../../constants.dart' as Constants;
 import 'package:vaniglia_logistic/screen/impostazioni/events_example.dart';
+
+import 'package:vaniglia_logistic/shared/makeDrawer.dart';
+
 import 'utils.dart';
 
 
@@ -128,9 +133,14 @@ class _TableEventsExampleState extends State<TableEventsExample> {
         focusedDay = focusedDay_aux;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
 
+        /*
         widget.parent.setState(() {
 
         });
+
+         */
+
+
       });
 
       _selectedEvents.value = _getEventsForDay(selectedDay);
@@ -205,10 +215,18 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                             );
                             value.add(Event("Consegna"));
 
+
+
                           }
 
 
                           );
+
+
+                          Evento e = Evento(id: "consegna "+ _selectedDay.day.toString(), date: Timestamp.fromDate(_selectedDay));
+                          DatabaseService(uid: Routes.utente.uid).updateEventi(e);
+
+                          //dynamic result = await DatabaseService.updateUser(Evento e);
 
                         },
                         child: const Text('Aggiungi consegna'),

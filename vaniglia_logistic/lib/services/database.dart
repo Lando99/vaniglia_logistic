@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vaniglia_logistic/models/evento.dart';
@@ -190,34 +192,68 @@ class DatabaseService {
 
 
   // ** Metodi tabella calendario **
+
+
+  //Meteodo che ritorna i dati statici
+  Future<List<Evento>> eventiStatici (int mese, int anno) async  {
+    return await calendario.where('__name__' , isEqualTo : mese.toString()+"_"+anno.toString()).snapshots().map(_eventiCalendarioFromSnapshot).first;
+
+  }
+
+  //update eventi
+  Future<void> updateEventi(Evento e) async {
+
+
+    var date = new DateTime.fromMicrosecondsSinceEpoch(e.date.microsecondsSinceEpoch);
+    int mese = date.month, anno = date.year;
+
+    List<Evento> eventi = await eventiStatici(mese, anno);
+
+    eventi.add(e);
+
+
+    var arr = new List(eventi.length);// creates an empty array of length 5
+    // assigning values to all the indices
+    for(int i = 0; i < eventi.length; i++){
+      arr[i] = eventi.elementAt(i).date;
+    }
+
+
+    return calendario
+        .doc(mese.toString() + "_" + anno.toString())
+        .update({'consegne': arr})
+        .then((value) => null )
+        .catchError((error) => print("Failed to update evento: $error"));
+  }
+
+  // Lettura degli eventi
   List<Evento> _eventiCalendarioFromSnapshot(QuerySnapshot snapshot){
-    return snapshot.docs.map((doc){
+    print("Read eventi");
 
-      Evento aux;
 
-      aux =  Evento(
-        id : doc.id,
-        date : doc.data()['data'] ?? null,
-      );
-      print(aux.id);
+    List<Evento> eventi = <Evento> [] ;
 
-      return aux;
-    }).toList();
+    List<Timestamp> data = List.from(snapshot.docs.first['consegne']);
+
+
+    
+    
+    for(int i = 0; i < data.length; i ++){
+      Evento aux = Evento(id: "consegna "+ i.toString(),date: data.elementAt(i));
+      eventi.add(aux);
+
+    }
+
+    return eventi.toList();
+
   }
 
   // Stream eventi calendario
  Stream<List<Evento>> eventiCalendarioStream(int anno, int mese){
 
-    // Calcolo il primo e ultimo giorno del mese
-    var firstDayOfMonth = new DateTime(anno, mese, 1);
-    var lastDayOfMonth = new DateTime(firstDayOfMonth.year, firstDayOfMonth.month + 1, firstDayOfMonth.day-1);
-
-
-    return calendario.where('data', isGreaterThanOrEqualTo: firstDayOfMonth).where('data', isLessThanOrEqualTo: lastDayOfMonth).snapshots().map(_eventiCalendarioFromSnapshot);
-
+    return calendario.where('__name__' , isEqualTo : mese.toString()+"_"+anno.toString()).snapshots().map(_eventiCalendarioFromSnapshot);
+   
   }
-
-// where('data', isGreaterThanOrEqualTo: firstDayOfMonth).where('data', isLessThanOrEqualTo: lastDayOfMonth)
 
 }
 
