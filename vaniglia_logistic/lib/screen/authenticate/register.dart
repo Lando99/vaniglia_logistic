@@ -47,7 +47,7 @@ class _RegisterState extends State<Register> {
                   new Flexible(
                     child: TextFormField(
                       validator: (val) => val.isEmpty ? 'iserisci email' : null,
-                      decoration: textInputeDecoration.copyWith(hintText: "BETA"),
+                      decoration: textInputeDecoration.copyWith(hintText: "iserisci email"),
                       onChanged: (val){
                         setState(() {
                           email = val;
@@ -57,24 +57,11 @@ class _RegisterState extends State<Register> {
 
                   ),
 
-                  Text(
-                    '  @vaniglia.com',
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[600],
-                      fontFamily: 'Raleway',
-                      fontSize: 20,
-                    ),
-                  ),
-
-
                 ],
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                decoration: textInputeDecoration.copyWith(hintText: "BETA"),
+                decoration: textInputeDecoration.copyWith(hintText: "iserisci password con più di 6 caratteri"),
                 validator: (val) => val.length < 6  ? 'iserisci password con più di 6 caratteri' : null,
                 obscureText: true,
                 onChanged: (val){

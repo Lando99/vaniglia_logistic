@@ -64,7 +64,7 @@ class _ManageUtentiState extends State<ManageUtenti> {
                     label: Text("Logout"),)
                 ],
               ),
-              drawer: MakeDrawer(_user),
+              drawer: MakeDrawer(),
               body: ListaUtenti(),
               floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.person_add_alt_1_outlined),

@@ -26,11 +26,4 @@ class Routes {
 
   static const String deliveries = Deliveries.routeName;
 
-
-
-
-  static  Utente utente = null;
-
-
-
 }

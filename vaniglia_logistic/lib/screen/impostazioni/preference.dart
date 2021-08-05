@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:vaniglia_logistic/models/evento.dart';
+import 'package:vaniglia_logistic/services/auth.dart';
 import 'package:vaniglia_logistic/services/database.dart';
 import 'package:vaniglia_logistic/shared/routes.dart';
 import '../../constants.dart' as Constants;
@@ -151,6 +152,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
   @override
   Widget build(BuildContext context) {
+
+    final AuthService _auth = AuthService();
+
     return Column(
       children: [
         TableCalendar<Event>(
@@ -224,7 +228,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
 
                           Evento e = Evento(id: "consegna "+ _selectedDay.day.toString(), date: Timestamp.fromDate(_selectedDay));
-                          DatabaseService(uid: Routes.utente.uid).updateEventi(e);
+                          DatabaseService(uid: _auth.getUid()).updateEventi(e);
 
                           //dynamic result = await DatabaseService.updateUser(Evento e);
 

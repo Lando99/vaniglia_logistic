@@ -115,8 +115,10 @@ class DatabaseService {
 
   }
 
-  // brew from snapshot
-  List<Utente> _brewListFromSnapshot(QuerySnapshot snapshot){
+  /// *** METODI SUGLI UTENTI
+
+  // ** Lettura utentti **
+  List<Utente> _utentiFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc){
       return Utente(
         email: doc.data()['email'] ?? '',
@@ -125,13 +127,14 @@ class DatabaseService {
       );
     }).toList();
   }
-
-  // Stream sul database
+  // Stream utenti
   Stream<List<Utente>> get utentiStream{
     return utenti.snapshots()
-    .map(_brewListFromSnapshot);
+    .map(_utentiFromSnapshot);
   }
 
+
+  /// *** METODI PER LA GESTIONE ORDINI ***
 
   // ** Lettura ordini **
   List<Ordine> _ordiniFromSnapshot(QuerySnapshot snapshot){
@@ -152,13 +155,20 @@ class DatabaseService {
       return aux;
     }).toList();
   }
-
   // Stream ordini
   Stream<List<Ordine>> get ordiniStream{
     return ordini.snapshots()
         .map(_ordiniFromSnapshot);
   }
 
+  //Eliminare un ordine
+  Future<void> eliminaOrdine(String id) {
+    return ordini
+        .doc(id)
+        .delete()
+        .then((value) => print("ordine eliminato"))
+        .catchError((error) => print("eliminazione ordine fallita: $error"));
+  }
 
 
 
@@ -247,7 +257,6 @@ class DatabaseService {
     return eventi.toList();
 
   }
-
   // Stream eventi calendario
  Stream<List<Evento>> eventiCalendarioStream(int anno, int mese){
 

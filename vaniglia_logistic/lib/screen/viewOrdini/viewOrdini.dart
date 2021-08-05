@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaniglia_logistic/models/ordine.dart';
+import 'package:vaniglia_logistic/services/auth.dart';
 import 'package:vaniglia_logistic/services/database.dart';
 import 'package:vaniglia_logistic/shared/makeDrawer.dart';
 import 'package:vaniglia_logistic/shared/routes.dart';
@@ -71,7 +72,9 @@ class _OrdiniState extends State<Ordini> {
         initialData: [],
       builder: (context, snapshot) {
 
+
         return  DefaultTabController(
+
             length: 3,
             child: Scaffold(
 
@@ -83,12 +86,12 @@ class _OrdiniState extends State<Ordini> {
                   bottom: TabBar(
                     tabs: [
                       Tab(icon: Text("elaborazione")),
-                      Tab(icon: Text("conseganti")),
+                      Tab(icon: Text("consegnati")),
                       Tab(icon: Text("tutti")),
                     ],
                   ),
               ),
-              drawer: MakeDrawer(Routes.utente),
+              drawer: MakeDrawer(),
 
 
               body: TabBarView(
@@ -292,6 +295,8 @@ class _ListaOrdiniState extends State<ListaOrdini> {
 // generatore di Item per la prova
 List<Item> generateItems(List<Ordine> ordini) {
 
+  final AuthService _auth = AuthService();
+
   return List<Item>.generate(ordini.length, (int index) {
     return Item(
       headerValue:
@@ -335,7 +340,9 @@ List<Item> generateItems(List<Ordine> ordini) {
                   child: IconButton(
                     icon: new Icon(Icons.delete),
                     onPressed: (){
-                      //TODO: Richiamara la funzione di eliminazione dell'ordine
+                      // Eliminazione dell'ordine
+
+                      DatabaseService(uid: _auth.getUid()).eliminaOrdine(ordini[index].id);
 
                     },
                   ),

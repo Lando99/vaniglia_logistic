@@ -8,15 +8,13 @@ import 'package:vaniglia_logistic/services/auth.dart';
 import 'package:vaniglia_logistic/shared/loading.dart';
 import 'package:vaniglia_logistic/shared/makeDrawer.dart';
 import 'package:vaniglia_logistic/services/database.dart';
-import 'package:vaniglia_logistic/shared/routes.dart';
 
 
 
 import '../../constants.dart' as Constants;
 import 'homeComponets/CardProgressionElaborazione.dart';
 
-
-
+import 'package:vaniglia_logistic/shared/globals.dart' as globals;
 
 class Home extends StatelessWidget {
 
@@ -27,17 +25,13 @@ class Home extends StatelessWidget {
   final CollectionReference utenti = FirebaseFirestore.instance.collection('utenti');
   static const String routeName = "/Home";
 
-
+   //Utente _user = null;
 
 
 
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return FutureBuilder<DocumentSnapshot>(
       future: utenti.doc(_auth.getUid()).get(),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -45,11 +39,7 @@ class Home extends StatelessWidget {
 
 
           Map<String, dynamic> data = snapshot.data.data();
-
-
-
-          Utente _user = Utente(uid: data.keys.toString(), email: data['email'], ruolo: data['ruolo'] );
-          Routes.utente = Utente(uid: data.keys.toString(), email: data['email'], ruolo: data['ruolo'] );
+          globals.user = Utente(uid: data.keys.toString(), email: data['email'], ruolo: data['ruolo'] );
 
           //notification();
 
@@ -69,7 +59,7 @@ class Home extends StatelessWidget {
                   label: Text("Logout"),)
               ],
             ),
-            drawer: MakeDrawer(_user),
+            drawer: MakeDrawer(),
             body: StreamProvider<List<Ordine>>.value(
                 value: DatabaseService().ordiniStream,
                 initialData: [],
