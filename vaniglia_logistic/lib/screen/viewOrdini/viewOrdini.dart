@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaniglia_logistic/models/ordine.dart';
@@ -11,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:vaniglia_logistic/models/Item.dart';
 
 import '../../constants.dart' as Constants;
+
 
 class Ordini extends StatefulWidget {
   static const String routeName = "/Ordini";
@@ -59,7 +58,7 @@ class _OrdiniState extends State<Ordini> {
 
 
       aux.sort((a, b) => b.dateConsegna.compareTo(a.dateConsegna));
-      items = generateItems(aux);
+      items = generateItems(aux, context);
       
       return items;
     }
@@ -290,10 +289,8 @@ class _ListaOrdiniState extends State<ListaOrdini> {
 
 
 
-
-
 // generatore di Item per la prova
-List<Item> generateItems(List<Ordine> ordini) {
+List<Item> generateItems(List<Ordine> ordini, BuildContext context) {
 
   final AuthService _auth = AuthService();
 
@@ -340,9 +337,32 @@ List<Item> generateItems(List<Ordine> ordini) {
                   child: IconButton(
                     icon: new Icon(Icons.delete),
                     onPressed: (){
-                      // Eliminazione dell'ordine
 
-                      DatabaseService(uid: _auth.getUid()).eliminaOrdine(ordini[index].id);
+
+
+                      // Eliminazione dell'ordine
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Eliminare ordine'),
+                          content: const Text("Sei sicuro di volere eliminare l'ordine? \nL'operazione è irreversibile"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('ANNULLA'),
+                            ),
+                            TextButton(
+                              onPressed: ()
+                                  {
+                                    DatabaseService(uid: _auth.getUid()).eliminaOrdine(ordini[index].id);
+                                    Navigator.pop(context);
+                                  },
+                              child: const Text('ELIMINA'),
+                            ),
+                          ],
+                        ),
+                      );
+
 
                     },
                   ),
@@ -387,4 +407,7 @@ List<Item> generateItems(List<Ordine> ordini) {
     );
   });
 }
+
+
+
 

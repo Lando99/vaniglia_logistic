@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6cdb89f4-bfbd-4e49-a770-dee98d42ef30" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/shared/globals.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/authenticate/register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/authenticate/register.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/home/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/home/home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/impostazioni/preference.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/impostazioni/preference.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/makeOrder/selectUtente.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/makeOrder/selectUtente.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/manageUtenti/manageUtenti.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/manageUtenti/manageUtenti.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/viewOrdini/viewOrdini.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/screen/viewOrdini/viewOrdini.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vaniglia_logistic/lib/services/database.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/services/database.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vaniglia_logistic/lib/shared/makeDrawer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/shared/makeDrawer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vaniglia_logistic/lib/shared/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/lib/shared/routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vaniglia_logistic/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/vaniglia_logistic/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +98,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627759564471</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="correzioni vari&#10;migliore gestione dell'utente&#10;eliminadione degli ordini">
+      <created>1628156400961</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1628156400961</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -115,7 +115,8 @@
     <MESSAGE value="Versione 0.0.5&#10;&#10;Agginta del calendario nelle impostazioni" />
     <MESSAGE value="lettura eventi calendario" />
     <MESSAGE value="nuova lettura eventi con risparmio di lettura&#10;Aggiunta di eventi al calendario nel database.dart" />
-    <option name="LAST_COMMIT_MESSAGE" value="nuova lettura eventi con risparmio di lettura&#10;Aggiunta di eventi al calendario nel database.dart" />
+    <MESSAGE value="correzioni vari&#10;migliore gestione dell'utente&#10;eliminadione degli ordini" />
+    <option name="LAST_COMMIT_MESSAGE" value="correzioni vari&#10;migliore gestione dell'utente&#10;eliminadione degli ordini" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1384" y="352" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1620304516646">
@@ -126,34 +127,34 @@
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
     <state x="1657" y="487" key="#com.intellij.ide.util.TreeFileChooserDialog/0.23.2560.1335@0.23.2560.1335" timestamp="1620304513549" />
-    <state x="661" y="203" key="CommitChangelistDialog2" timestamp="1627759564365">
+    <state x="661" y="203" key="CommitChangelistDialog2" timestamp="1628156400859">
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
-    <state x="661" y="203" key="CommitChangelistDialog2/0.23.2560.1335@0.23.2560.1335" timestamp="1627759564365" />
+    <state x="661" y="203" key="CommitChangelistDialog2/0.23.2560.1335@0.23.2560.1335" timestamp="1628156400859" />
     <state x="200" y="123" width="2360" height="1135" key="DiffContextDialog" timestamp="1626087262215">
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
     <state x="200" y="123" width="2360" height="1135" key="DiffContextDialog/0.23.2560.1335@0.23.2560.1335" timestamp="1626087262215" />
-    <state width="1662" height="209" key="GridCell.Tab.0.bottom" timestamp="1628154246696">
+    <state width="1662" height="569" key="GridCell.Tab.0.bottom" timestamp="1628157803544">
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
     <state width="1489" height="209" key="GridCell.Tab.0.bottom/0.23.0.-105@0.23.0.-105" timestamp="1627768083867" />
-    <state width="1662" height="209" key="GridCell.Tab.0.bottom/0.23.2560.1335@0.23.2560.1335" timestamp="1628154246696" />
-    <state width="1662" height="209" key="GridCell.Tab.0.center" timestamp="1628154246696">
+    <state width="1662" height="569" key="GridCell.Tab.0.bottom/0.23.2560.1335@0.23.2560.1335" timestamp="1628157803544" />
+    <state width="1662" height="569" key="GridCell.Tab.0.center" timestamp="1628157803543">
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
     <state width="1489" height="209" key="GridCell.Tab.0.center/0.23.0.-105@0.23.0.-105" timestamp="1627768083867" />
-    <state width="1662" height="209" key="GridCell.Tab.0.center/0.23.2560.1335@0.23.2560.1335" timestamp="1628154246696" />
-    <state width="1662" height="209" key="GridCell.Tab.0.left" timestamp="1628154246696">
+    <state width="1662" height="569" key="GridCell.Tab.0.center/0.23.2560.1335@0.23.2560.1335" timestamp="1628157803543" />
+    <state width="1662" height="569" key="GridCell.Tab.0.left" timestamp="1628157803543">
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
     <state width="1489" height="209" key="GridCell.Tab.0.left/0.23.0.-105@0.23.0.-105" timestamp="1627768083867" />
-    <state width="1662" height="209" key="GridCell.Tab.0.left/0.23.2560.1335@0.23.2560.1335" timestamp="1628154246696" />
-    <state width="1662" height="209" key="GridCell.Tab.0.right" timestamp="1628154246696">
+    <state width="1662" height="569" key="GridCell.Tab.0.left/0.23.2560.1335@0.23.2560.1335" timestamp="1628157803543" />
+    <state width="1662" height="569" key="GridCell.Tab.0.right" timestamp="1628157803544">
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
     <state width="1489" height="209" key="GridCell.Tab.0.right/0.23.0.-105@0.23.0.-105" timestamp="1627768083867" />
-    <state width="1662" height="209" key="GridCell.Tab.0.right/0.23.2560.1335@0.23.2560.1335" timestamp="1628154246696" />
+    <state width="1662" height="569" key="GridCell.Tab.0.right/0.23.2560.1335@0.23.2560.1335" timestamp="1628157803544" />
     <state x="1421" y="329" key="SettingsEditor" timestamp="1619600368996">
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
@@ -166,10 +167,10 @@
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
     <state x="100" y="123" width="2360" height="1135" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.2560.1335@0.23.2560.1335" timestamp="1625572596497" />
-    <state x="972" y="444" width="763" height="490" key="find.popup" timestamp="1627128228504">
+    <state x="972" y="444" width="763" height="490" key="find.popup" timestamp="1628158515853">
       <screen x="0" y="23" width="2560" height="1335" />
     </state>
-    <state x="972" y="444" width="763" height="490" key="find.popup/0.23.2560.1335@0.23.2560.1335" timestamp="1627128228504" />
+    <state x="972" y="444" width="763" height="490" key="find.popup/0.23.2560.1335@0.23.2560.1335" timestamp="1628158515853" />
     <state x="945" y="327" width="670" height="676" key="search.everywhere.popup" timestamp="1627727541879">
       <screen x="0" y="23" width="2560" height="1335" />
     </state>

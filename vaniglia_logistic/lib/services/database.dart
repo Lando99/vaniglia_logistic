@@ -1,6 +1,8 @@
 
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vaniglia_logistic/models/evento.dart';
@@ -168,37 +170,9 @@ class DatabaseService {
         .delete()
         .then((value) => print("ordine eliminato"))
         .catchError((error) => print("eliminazione ordine fallita: $error"));
-  }
 
-
-
-
-
-  Utente get utenteCorrenteData{
-    utenti.doc("qcacMKpWLiP8KfoHNcfdP5CK6Uf2").get().then((value){
-
-      return Utente(
-          uid:"qcacMKpWLiP8KfoHNcfdP5CK6Uf2",
-          email: value.data()['email'] ?? '',
-          ruolo: value.data()['ruolo'] ?? '',
-      );
-
-    });
 
   }
-
-  Future<Utente> utenteData(String id) async{
-    return await utenti.doc(id).get().then((value) {
-      return Utente(
-        uid: id,
-        email: value.data()['email'] ?? '',
-        ruolo: value.data()['ruolo'] ?? '',
-      );
-
-    });
-
-  }
-
 
 
   // ** Metodi tabella calendario **
@@ -265,9 +239,6 @@ class DatabaseService {
   }
 
 }
-
-
-
 
 
 
