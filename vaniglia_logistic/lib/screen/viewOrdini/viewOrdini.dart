@@ -129,7 +129,13 @@ class _ListaOrdiniState extends State<ListaOrdini> {
 
 
     // List view in cui vengono visualizzati i prodotti in elaborazione
-    ListView List_Elaborazione = ListView(
+    ListView List_Elaborazione =
+
+
+
+    ListView(
+
+
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       children: [
@@ -166,6 +172,8 @@ class _ListaOrdiniState extends State<ListaOrdini> {
             ),
           ) : null,
       ],
+
+
     );
 
     // List view in cui vengono rappresentati i prodotti gia' consegnati
@@ -234,22 +242,22 @@ class _ListaOrdiniState extends State<ListaOrdini> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
                 child: Text("Elaborazione", style: TextStyle(color: Constants.sand, fontSize: 30),)),
-          ): Padding(padding: const EdgeInsets.all(0.0), child: Text(""),),
+          ): SizedBox(height: 0),
 
          widget.elaborazione != null ?
            widget.elaborazione.length == 0 ? Padding(
              padding: const EdgeInsets.all(8.0),
              child: Center(
                  child: Text("nussun ordine", style: TextStyle(color: Colors.grey, fontSize: 22),)),
-           ) : Padding(padding: const EdgeInsets.all(0.0), child: Text(""),)
-         : Padding(padding: const EdgeInsets.all(0.0), child: Text(""),),
+           ) : SizedBox(height: 0)
+         : SizedBox(height: 0),
 
 
 
 
 
           widget.elaborazione == null ?
-            Padding(padding: const EdgeInsets.all(0.0), child: Text(""),)
+          SizedBox(height: 0)
           : List_Elaborazione,
 
 
@@ -258,21 +266,21 @@ class _ListaOrdiniState extends State<ListaOrdini> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
                 child: Text("Consegnati", style: TextStyle(color: Constants.sand, fontSize: 30),)),
-          ): Padding(padding: const EdgeInsets.all(0.0), child: Text(""),),
+          ):SizedBox(height: 0),
 
           widget.consegnati != null ?
           widget.consegnati.length == 0 ? Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
                 child: Text("nussun ordine", style: TextStyle(color: Colors.grey, fontSize: 22),)),
-          ) : Padding(padding: const EdgeInsets.all(0.0), child: Text(""),)
-              : Padding(padding: const EdgeInsets.all(0.0), child: Text(""),),
+          ) : SizedBox(height: 0)
+              : SizedBox(height: 0),
 
 
 
 
           widget.consegnati == null?
-            Padding(padding: const EdgeInsets.all(0.0), child: Text(""),)
+          SizedBox(height: 0)
           : List_Consegnati,
 
 
@@ -338,8 +346,6 @@ List<Item> generateItems(List<Ordine> ordini, BuildContext context) {
                     icon: new Icon(Icons.delete),
                     onPressed: (){
 
-
-
                       // Eliminazione dell'ordine
                       showDialog<String>(
                         context: context,
@@ -394,7 +400,7 @@ List<Item> generateItems(List<Ordine> ordini, BuildContext context) {
                       ],
                     ),
                     Text(
-                        ordini[index].prodotti_quantita[indexP].qta.toString() + " Kg"
+                        ordini[index].prodotti_quantita[indexP].qta.toString() + " casse"
                     )
                   ],
                 );

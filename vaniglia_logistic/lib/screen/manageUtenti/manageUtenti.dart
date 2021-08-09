@@ -29,24 +29,8 @@ class _ManageUtentiState extends State<ManageUtenti> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot>(
 
-      future: utenti.doc("6zBY9abmApXd4MMyIIZGSh819kF3").get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-
-
-          Map<String, dynamic> data = snapshot.data.data();
-
-          Utente _user = Utente(uid: data.keys.toString(), email: data['email'], ruolo: data['ruolo'] );
-
-          return StreamProvider<List<Utente>>.value(
+return StreamProvider<List<Utente>>.value(
             initialData: [],
             value: DatabaseService().utentiStream,
             child: Scaffold(
@@ -76,13 +60,5 @@ class _ManageUtentiState extends State<ManageUtenti> {
 
             ),
           );
-
-        }else{
-           Loading();
-        }
-
-        return Loading();
-      },
-    );
   }
 }

@@ -16,9 +16,9 @@ int indexCurrent = 0;
 class _DeliveriesState extends State<Deliveries> {
 
   List<Ordine> ordini = [
-    Ordine( "001", "Brentelle", Timestamp.now(), {"banana" : 2}, "stato", Timestamp.now()),
-    Ordine( "001", "Ipercity", Timestamp.now(), {"banana" : 2}, "stato", Timestamp.now()),
-    Ordine( "001", "Giotto", Timestamp.now(), {"banana" : 2, "mela" : 7}, "stato", Timestamp.now())
+    Ordine( "001", "Brentelle", Timestamp.now(), {"banana" : 2}, "stato", Timestamp.now(), 'Vaniglia'),
+    Ordine( "001", "Ipercity", Timestamp.now(), {"banana" : 2}, "stato", Timestamp.now(), 'Cucchiaio del re'),
+    Ordine( "001", "Giotto", Timestamp.now(), {"banana" : 2, "mela" : 7}, "stato", Timestamp.now(), 'Copernico')
   ];
 
   @override

@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vaniglia_logistic/models/prodotti.dart';
 import 'package:vaniglia_logistic/screen/makeOrder/makeQuantity.dart';
 
+import 'Prodotto_Quantita.dart';
+
 
 /// Classe che contiene informazioni relativo a un ORDINAZIONE
 class Ordine{
@@ -17,8 +19,10 @@ class Ordine{
   String stato;
   DateTime dateConsegna = new DateTime(2000,04,30);
 
+  String societa;
 
-  Ordine(String id, String utente, Timestamp timestamp,  Map<String, dynamic> map, String stato, Timestamp timestampConsegna) {
+
+  Ordine(String id, String utente, Timestamp timestamp,  Map<String, dynamic> map, String stato, Timestamp timestampConsegna, String societa) {
     this.utente = utente;
     this.list = list;
     map.forEach((k, v) => prodotti_quantita.add(Prodotto_Quantita(p: Prodotto(nome: k), qta: v)));
@@ -27,6 +31,7 @@ class Ordine{
     this.stato = stato;
     this.dateConsegna = timestampConsegna.toDate();
     this.id = id;
+    this.societa = societa;
 
 
   }

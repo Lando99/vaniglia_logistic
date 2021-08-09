@@ -16,19 +16,18 @@ import 'homeComponets/CardProgressionElaborazione.dart';
 
 import 'package:vaniglia_logistic/shared/globals.dart' as globals;
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
 
-  final AuthService _auth = AuthService();
-  // Inizializzazione del utente con cui ho fatto l'accesso.
-  // l'Utente contine l'informazione email per la stampa grafica e l'attributo di ruolo in modo da indentificare
-  // all'interno del programma se l'utente con cui si ha fatto accesso e' un utente amministratore oppure un utente standart
-  final CollectionReference utenti = FirebaseFirestore.instance.collection('utenti');
   static const String routeName = "/Home";
 
-   //Utente _user = null;
+  @override
+  State<Home> createState() => HomeState();
+}
 
+class HomeState extends State<Home> {
+  final AuthService _auth = AuthService();
 
-
+  final CollectionReference utenti = FirebaseFirestore.instance.collection('utenti');
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +77,8 @@ class Home extends StatelessWidget {
                     child: Column(
                       children: [
                         CardProgressionElaborazione(auth: _auth,ordiniElaborazione: ordiniElaborazione),
-                        CardStatistic()
+                        SizedBox(height: 10),
+                        CardStatistic(parent: this,)
                       ],
                     ),
                   );

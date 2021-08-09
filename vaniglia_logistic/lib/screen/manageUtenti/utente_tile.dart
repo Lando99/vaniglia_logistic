@@ -17,8 +17,16 @@ class UtenteTile extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
           leading: const Icon(Icons.person),
-          title: Text(utente.email,
-          style: TextStyle(color: Colors.white),),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(utente.email,
+                style: TextStyle(color: Colors.white),),
+              Text(utente.societa,
+                style: TextStyle(color: Colors.white),),
+
+            ],
+          ),
           subtitle: Text(utente.ruolo),
         ),
       ),

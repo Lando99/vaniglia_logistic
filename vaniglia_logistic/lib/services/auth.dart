@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:vaniglia_logistic/models/Prodotto_Quantita.dart';
 import 'package:vaniglia_logistic/models/ordine.dart';
 import 'package:vaniglia_logistic/services/database.dart';
 import 'package:vaniglia_logistic/screen/makeOrder/makeQuantity.dart';
@@ -49,7 +51,7 @@ class AuthService{
 
 
       //await DatabaseService(uid: user.uid).updateUserDate('email', 'password', 'ruolo');
-      await DatabaseService(uid: _auth.currentUser.uid).updateUserData(email,'ruolo');
+      await DatabaseService(uid: _auth.currentUser.uid).updateUserData(email,'ruolo', 'società');
       _auth.signOut();
       return null;
 
@@ -123,14 +125,14 @@ class AuthService{
     }
   }
 
-  Future addOrder(String utente, List<Prodotto_Quantita> list) async {
+  Future addOrder(String utente, List<Prodotto_Quantita> list, String societa, BuildContext context) async {
     try{
       DateTime now = new DateTime.now();
       DateTime date = new DateTime(now.year, now.month, now.day, now.hour, now.minute);
 
-      await DatabaseService(uid: _auth.currentUser.uid).updateOrdiniData(utente, date, list);
+      await DatabaseService(uid: _auth.currentUser.uid).updateOrdiniData(utente, date, list, societa);
     }catch(e){
-      print(e);
+      return("AlertDialog - nessun evento programmato");
     }
   }
 

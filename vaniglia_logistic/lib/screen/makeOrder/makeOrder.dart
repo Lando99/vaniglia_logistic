@@ -21,17 +21,17 @@ class MakeOrder extends StatefulWidget {
 
 
   @override
-  _MakeOrderState createState() => _MakeOrderState();
+  MakeOrderState createState() => MakeOrderState();
 }
 
 
 List<Prodotto> prodotti_grafici = [
-  Prodotto(nome: "carota", icona: "bello"),
-  Prodotto(nome: "arancia", icona: "bello"),
-  Prodotto(nome: "mela", icona: "bello"),
-  Prodotto(nome: "pera", icona: "bello"),
-  Prodotto(nome: "lampone", icona: "bello"),
-  Prodotto(nome: "sedano", icona: "bello"),
+  Prodotto(nome: "carota", ),
+  Prodotto(nome: "arancia",),
+  Prodotto(nome: "mela", ),
+  Prodotto(nome: "pera", ),
+  Prodotto(nome: "lampone",),
+  Prodotto(nome: "sedano"),
 
   /*
     Prodotto(nome: "fragola", icona: "bello"),
@@ -52,7 +52,7 @@ List<Prodotto> prodottiScelti = [];
 // La griglia superiore mostra i prodotti selezionati, mentre la griglia inferiore rapprenta i prodotti disponibili
 
 
-class _MakeOrderState extends State<MakeOrder> {
+class MakeOrderState extends State<MakeOrder> {
 
   bool isLoadState;
 
@@ -75,7 +75,7 @@ class _MakeOrderState extends State<MakeOrder> {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             await showDialog<String>(
               context: context,
-              builder: (BuildContext context) => new WarningMessage(),
+              builder: (BuildContext context) => new WarningMessage(order: list.first.toString(), parent: this),
             );
           });
         }
@@ -288,6 +288,7 @@ class _MakeOrderState extends State<MakeOrder> {
           ],
         ),
         floatingActionButton: prodottiScelti.length != 0 ? FloatingActionButton(
+          heroTag: "btnSceltaProdotti",
           onPressed: () {
             Navigator.pushReplacementNamed(
                 context,
@@ -299,6 +300,7 @@ class _MakeOrderState extends State<MakeOrder> {
           backgroundColor: Constants.red,
         ) :
         FloatingActionButton(
+          heroTag: "btnNessunProdottoScelto",
           onPressed: () {},
           child: const Icon(Icons.navigate_next_rounded),
           backgroundColor: Colors.grey,

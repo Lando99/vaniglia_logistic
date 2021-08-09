@@ -6,6 +6,7 @@ import 'package:vaniglia_logistic/services/auth.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../constants.dart' as Constants;
+import 'package:vaniglia_logistic/screen/home/home.dart';
 
 
 /**
@@ -13,12 +14,18 @@ import '../../../constants.dart' as Constants;
  * */
 
 class CardStatistic extends StatefulWidget {
+
+  final HomeState parent;
+  CardStatistic({this.parent});
+
   @override
   _CardStatisticState createState() => _CardStatisticState();
 }
 
-class _CardStatisticState extends State<CardStatistic> {
 
+String valuePuntoVendita = 'tutti';
+String valuePeriodo = 'settimana';
+class _CardStatisticState extends State<CardStatistic> {
 
 
   @override
@@ -30,10 +37,72 @@ class _CardStatisticState extends State<CardStatistic> {
       ChartData('Others', 52)
     ];
 
-    ChartData data = ChartData("fdxgfhvbjn",0,null);
+
+
     return  Container(
         child: Column(
           children: [
+            Row(
+
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children:[
+                  DropdownButton<String>(
+                    value: valuePuntoVendita,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(
+                        color: Colors.deepPurple
+                    ),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        valuePuntoVendita = newValue;
+                      });
+                      widget.parent.setState(() {});
+                      },
+                    items: <String>['tutti', 'Brentelle', 'Ipercity', 'Palladio']
+                        .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        })
+                        .toList(),
+                  ),
+                  DropdownButton<String>(
+                    value: valuePeriodo,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(
+                        color: Colors.deepPurple
+                    ),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        valuePeriodo = newValue;
+                      });
+                      widget.parent.setState(() {});
+                      },
+                    items: <String>['settimana', 'mese', '3 mesi', 'anno']
+                        .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        })
+                        .toList(),
+                  ),
+              ]
+            ),
+
 
             SfCircularChart(
                 tooltipBehavior: TooltipBehavior(enable: true),

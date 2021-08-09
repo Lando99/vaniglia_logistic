@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:vaniglia_logistic/models/Prodotto_Quantita.dart';
 import 'package:vaniglia_logistic/models/evento.dart';
 import 'package:vaniglia_logistic/models/ordine.dart';
 import 'package:vaniglia_logistic/models/user.dart';
@@ -24,10 +25,11 @@ class DatabaseService {
 
   //Metodi di UPDATE
 
-  Future<void> updateUserData(String nome, String ruolo) async {
+  Future<void> updateUserData(String nome, String ruolo, String societa) async {
     return await utenti.doc(uid).set({
         'email': nome,
         'ruolo': ruolo,
+        'società`' : societa
       });
 
   }
@@ -40,7 +42,7 @@ class DatabaseService {
 
 
   // Scrittura degli ordini sul database
-  Future<void> updateOrdiniData(String utente, DateTime date, List<Prodotto_Quantita> list) async {
+  Future<void> updateOrdiniData(String utente, DateTime date, List<Prodotto_Quantita> list, String societa) async {
 
     // generazione manuale dell'id per 'ordine
     var uuid = Uuid();
@@ -52,7 +54,8 @@ class DatabaseService {
       'date' : date,
       'stato' : "elaborazione",
       'prodotti' : null,
-      'dateConsegna' : null
+      'dateConsegna' : null,
+      'società': societa
     };
 
 
@@ -63,57 +66,46 @@ class DatabaseService {
     docData['prodotti'] = map1;
 
     DateTime now = new DateTime.now();
-    DateTime dateConsegna = new DateTime(now.year, now.month, now.day, now.hour, now.minute);
+
+    //vedo se c'è in questo mese una cosegna disponibile
+    List<Evento> eventi = await eventiStatici(now.month, now.year);
 
 
-    int martedi= 1, venerdi = 4;
-
-    switch(now.weekday) {
-      case 1: {
-        now = now.add(Duration(days: 1));
-        dateConsegna = new DateTime(now.year, now.month, now.day, 9, 00);
+    for(int i = 0; i<eventi.length; i++){
+      if(eventi.elementAt(i).date.compareTo(Timestamp.now()) == -1){
+        eventi.removeAt(i);
       }
-      break;
+    }
+    Evento min;
+    if(eventi.length == 0 ){
+      //vai al prossimo mese
+      eventi = await eventiStatici(now.month+1, now.year).catchError((error, stackTrace) {
+        print("inner: $error");
+        // although `throw SecondError()` has the same effect.
+        return <Evento> [];
+      });
+      print("ok2");
+      print("eventi "+eventi.toString());
 
-      case 2: {
-        now = now.add(Duration(days: 3));
-        dateConsegna = new DateTime(now.year, now.month, now.day, 9, 00);
-      }
-      break;
 
-      case 3: {
-        now = now.add(Duration(days: 2));
-        dateConsegna = new DateTime(now.year, now.month, now.day, 9, 00);
-      }
-      break;
-
-      case 4: {
-        now = now.add(Duration(days: 1));
-        dateConsegna = new DateTime(now.year, now.month, now.day, 9, 00);
-      }
-      break;
-
-      case 5: {
-        now = now.add(Duration(days: 4));
-        dateConsegna = new DateTime(now.year, now.month, now.day, 9, 00);
-      }
-      break;
-
-      case 6: {
-        now = now.add(Duration(days: 3));
-        dateConsegna = new DateTime(now.year, now.month, now.day, 9, 00);
-      }
-      break;
-
-      case 7: {
-        now = now.add(Duration(days: 2));
-        dateConsegna = new DateTime(now.year, now.month, now.day, 9, 00);
-      }
-      break;
     }
 
-    docData['dateConsegna'] = dateConsegna;
-    return await ordini.doc(id).set(docData);
+    if(eventi.length != 0){
+
+      eventi.sort((a, b) => a.date.compareTo(b.date));
+      min = eventi.first;
+
+      DateTime dateConsegna = min.date.toDate();
+
+
+
+
+      docData['dateConsegna'] = dateConsegna;
+      return await ordini.doc(id).set(docData);
+    }else{
+      //return <Evento> [];
+      return Future.error("This is the error", StackTrace.fromString("This is its trace"));
+    }
 
   }
 
@@ -125,7 +117,7 @@ class DatabaseService {
       return Utente(
         email: doc.data()['email'] ?? '',
         ruolo: doc.data()['ruolo'] ?? '',
-
+        societa: doc.data()['società'] ?? ''
       );
     }).toList();
   }
@@ -133,6 +125,11 @@ class DatabaseService {
   Stream<List<Utente>> get utentiStream{
     return utenti.snapshots()
     .map(_utentiFromSnapshot);
+  }
+
+  Future<List<Utente>> utentiFuture () async  {
+    return await utentiStream.first;
+
   }
 
 
@@ -151,6 +148,7 @@ class DatabaseService {
         doc.data()['prodotti'] ?? null,
         doc.data()['stato'] ?? '',
         doc.data()['dateConsegna'] ?? null,
+        doc.data()['società'] ?? ''
 
       );
 
@@ -173,14 +171,36 @@ class DatabaseService {
 
 
   }
+/*
+  // Analisi degli ordini
+  Future<void> analisiOrdini(String utente, String periodo) {
+
+    DateTime 
+    Timestamp date = Timestamp.fromDate(date)
+    int mese = date.month, anno = date.year;
+    
+    if(utente == "tutti"){
+      return ordini.where("date", isGreaterThan:  )
+      
+    }
 
 
+  }
+
+
+ */
   // ** Metodi tabella calendario **
 
 
   //Meteodo che ritorna i dati statici
   Future<List<Evento>> eventiStatici (int mese, int anno) async  {
-    return await calendario.where('__name__' , isEqualTo : mese.toString()+"_"+anno.toString()).snapshots().map(_eventiCalendarioFromSnapshot).first;
+    return await calendario.where('__name__' , isEqualTo : mese.toString()+"_"+anno.toString()).snapshots().map(_eventiCalendarioFromSnapshot)
+        .first.catchError((e) {
+      return Future.error("Nessuna consegna programmata");
+    });
+
+
+    //.onError((error, stackTrace) {print("ciao"); return [];});
 
   }
 
@@ -192,6 +212,15 @@ class DatabaseService {
     int mese = date.month, anno = date.year;
 
     List<Evento> eventi = await eventiStatici(mese, anno);
+    if(eventi.length==0){
+
+      String id = mese.toString() + "_" + anno.toString();
+
+      calendario.doc(id).set({
+        'consegne': [],
+      }).then((value) => print("nuovo mese di consegne aggiuto"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
 
     eventi.add(e);
 
@@ -212,23 +241,28 @@ class DatabaseService {
 
   // Lettura degli eventi
   List<Evento> _eventiCalendarioFromSnapshot(QuerySnapshot snapshot){
-    print("Read eventi");
 
+    print("Read eventi");
 
     List<Evento> eventi = <Evento> [] ;
 
-    List<Timestamp> data = List.from(snapshot.docs.first['consegne']);
+
+    if(snapshot.size != 0){
+      List<Timestamp> data = List.from(snapshot.docs.first['consegne']);
 
 
-    
-    
-    for(int i = 0; i < data.length; i ++){
-      Evento aux = Evento(id: "consegna "+ i.toString(),date: data.elementAt(i));
-      eventi.add(aux);
+      for(int i = 0; i < data.length; i ++){
+        Evento aux = Evento(id: "consegna "+ i.toString(),date: data.elementAt(i));
+        eventi.add(aux);
 
+      }
+
+      return eventi.toList();
+
+    }else{
+      throw("nessuna consegna programmata");
     }
 
-    return eventi.toList();
 
   }
   // Stream eventi calendario
@@ -237,6 +271,8 @@ class DatabaseService {
     return calendario.where('__name__' , isEqualTo : mese.toString()+"_"+anno.toString()).snapshots().map(_eventiCalendarioFromSnapshot);
    
   }
+  
+  
 
 }
 

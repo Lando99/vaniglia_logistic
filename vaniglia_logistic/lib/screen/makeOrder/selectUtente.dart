@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:vaniglia_logistic/models/user.dart';
+import 'package:vaniglia_logistic/services/database.dart';
 import 'package:vaniglia_logistic/shared/routes.dart';
 
 import 'package:vaniglia_logistic/constants.dart' as Constants;
-
+import 'package:vaniglia_logistic/shared/globals.dart' as globals;
 
 
 class Global {
@@ -10,7 +13,7 @@ class Global {
 }
 
 
-List<String> accounts = ["Seleziona" ,"Ipercity", "Brentelle", "Giotto"];
+List<String> accounts  = ["seleziona    "];
 
 
 class SelectUtente extends StatefulWidget {
@@ -23,6 +26,7 @@ class SelectUtente extends StatefulWidget {
 
 class _SelectUtenteState extends State<SelectUtente> {
 
+
   String dropdownValue = accounts[0];
   final snackBarError = SnackBar(content: Text('Seleziona utente!'));
 
@@ -31,9 +35,29 @@ class _SelectUtenteState extends State<SelectUtente> {
   @override
   void initState() {
     super.initState();
+
+    accounts = ["seleziona    "];
+    DatabaseService().utenti.where('ruolo', isEqualTo: 'standart').get().then((data) {
+      setState(() {
+        List list = data.docs.map((e) => e.data()['email']).toList();
+        
+        
+        for(int i = 0; i < list.length; i++){
+          accounts.add(list.elementAt(i).toString().split('@').first);
+        }
+      });
+
+
+
+    }).catchError((e) {
+      Navigator.pop(context, "an error");
+    });
+
+
+
+
     dropdownValue = accounts[0];
     Global.u = accounts[0];
-
   }
 
 
@@ -107,6 +131,7 @@ class _SelectUtenteState extends State<SelectUtente> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btnSelectUser",
         onPressed: () {
           dropdownValue = accounts[0];
 

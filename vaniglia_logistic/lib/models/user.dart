@@ -9,7 +9,8 @@ class Utente{
   final String uid; //id utente
   final String email;
   final String ruolo;
+  final String societa;
 
-  Utente ({this.uid,this.email = "", this.ruolo=""});
+  Utente ({this.uid,this.email = "", this.ruolo="", this.societa = ""});
 
 }

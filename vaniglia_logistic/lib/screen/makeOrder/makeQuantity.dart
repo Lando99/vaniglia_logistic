@@ -1,5 +1,9 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:vaniglia_logistic/models/Prodotto_Quantita.dart';
 import 'package:vaniglia_logistic/models/prodotti.dart';
+import 'package:vaniglia_logistic/screen/makeOrder/makeOrder.dart';
 import 'package:vaniglia_logistic/screen/makeOrder/screenArguments.dart';
 import 'package:vaniglia_logistic/shared/routes.dart';
 import 'package:vaniglia_logistic/constants.dart' as Constants;
@@ -7,8 +11,8 @@ import 'package:vaniglia_logistic/constants.dart' as Constants;
 import 'confirmOrder.dart';
 
 
-List<int> numbers = [1,2,3,4,5,6,7,8,9];
 
+Map<String, double> quantitaMap = {'1/4': 0.25, '1/2': 0.5, '1': 1};
 /**
  * #View per selezionare le quantita' di merce che vogliamo ordinare
  *
@@ -21,7 +25,7 @@ class MakeQuantity extends StatefulWidget {
   _MakeQuantityState createState() => _MakeQuantityState();
 }
 
-List<Prodotto_Quantita> prodotti_quantita;
+List<Prodotto_Quantita> prodotti_quantita = [];
 
 class _MakeQuantityState extends State<MakeQuantity> {
   @override
@@ -33,7 +37,23 @@ class _MakeQuantityState extends State<MakeQuantity> {
     final List<Prodotto> prodotti = args.prodotti;
 
 
-    prodotti_quantita = copyList(prodotti);
+    if(prodotti_quantita.length == 0){
+      prodotti_quantita = copyList(prodotti);
+    }
+    if(prodotti_quantita.length < prodotti.length){
+      for(int i = 0; i<prodotti.length; i++){
+        bool trovato = false;
+        for(int j = 0; j<prodotti_quantita.length; j++){
+          if(prodotti_quantita[j].p.nome == prodotti[i].nome)
+            trovato = true;
+
+        }
+        if(trovato == false){
+          prodotti_quantita.add(Prodotto_Quantita(p: prodotti[i], qta: 1));
+        }
+      }
+    }
+
 
 
     return Scaffold(
@@ -62,6 +82,7 @@ class _MakeQuantityState extends State<MakeQuantity> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btnMakeQuantity",
         child: Icon(Icons.navigate_next_rounded),
         backgroundColor: Constants.red,
         onPressed: (){
@@ -104,10 +125,12 @@ class CardMakeQuanity extends StatefulWidget {
 
 class _CardMakeQuanityState extends State<CardMakeQuanity> {
 
-  int dropdownValue = 1;
+
 
   @override
   Widget build(BuildContext context) {
+    double dropdownValue = prodotti_quantita.elementAt(widget.index).qta;
+
     return Card(
       color: Constants.lightGreen,
       child: ListTile(
@@ -121,7 +144,7 @@ class _CardMakeQuanityState extends State<CardMakeQuanity> {
               children: <Widget>[
                  Padding(
                    padding: const EdgeInsets.only(left: 15, right: 15),
-                   child: FloatingActionButton(
+                   child: ElevatedButton(
                     onPressed: (){
                       if(dropdownValue < 9){
                         setState(() {
@@ -132,47 +155,45 @@ class _CardMakeQuanityState extends State<CardMakeQuanity> {
 
                     },
                     child: new Icon(Icons.add, color: Colors.black,),
-                    backgroundColor: Colors.white,),
+                   ),
                  ),
 
 
-          Container(
 
-                padding: const EdgeInsets.only(left: 15, right: 15),
+                Container(
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  decoration: new BoxDecoration(
 
-            decoration: new BoxDecoration(
-
-                color: Colors.white,
-                borderRadius: new BorderRadius.only(
-                    topLeft:  const  Radius.circular(5.0),
-                    topRight: const  Radius.circular(5.0),
-                    bottomLeft: const  Radius.circular(5.0),
-                    bottomRight: const  Radius.circular(5.0)
+                    color: Colors.white,
+                    borderRadius: new BorderRadius.only(
+                        topLeft:  const  Radius.circular(5.0),
+                        topRight: const  Radius.circular(5.0),
+                        bottomLeft: const  Radius.circular(5.0),
+                        bottomRight: const  Radius.circular(5.0)
+                    ),
+                  ),
+                  child: DropdownButton<double>(
+                    value: dropdownValue,
+                    onChanged: (double newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                        prodotti_quantita.elementAt(widget.index).qta = dropdownValue;
+                      });
+                      },
+                    items: quantitaMap
+                        .map((description, value){
+                          return MapEntry(description,
+                              DropdownMenuItem<double>(
+                                value: value,
+                                child: Text(description),
+                              ));
+                        }).values.toList(),
+                  ),
                 ),
-
-
-            ),
-                child: DropdownButton<int>(
-                  value: dropdownValue,
-                  onChanged: (int newValue) {
-                    setState(() {
-                      dropdownValue = newValue;
-                      prodotti_quantita.elementAt(widget.index).qta = dropdownValue;
-                    });
-                  },
-                  items: numbers
-                      .map<DropdownMenuItem<int>>((int value) {
-                    return DropdownMenuItem<int>(
-                      value: value,
-                      child: Text(value.toString()),
-                    );
-                  }).toList(),
-                ),
-              ),
 
                 Padding(
                   padding: const EdgeInsets.only(left: 15,right: 15),
-                  child: FloatingActionButton(
+                  child: ElevatedButton(
                     onPressed: (){
                       if(dropdownValue > 1){
                         setState(() {
@@ -182,7 +203,7 @@ class _CardMakeQuanityState extends State<CardMakeQuanity> {
                       }
                     },
                     child: new Icon(Icons.remove, color: Colors.black,),
-                    backgroundColor: Colors.white,),
+                    ),
                 ),
 
 
@@ -196,26 +217,3 @@ class _CardMakeQuanityState extends State<CardMakeQuanity> {
   }
 }
 
-// Classe che mette in relazione il prodotto e la sua quantia' durante la generazione di un ordine
-class Prodotto_Quantita{
-
-  final Prodotto p;
-  int qta;
-
-  Prodotto_Quantita ({this.p,this.qta = 0});
-
-  @override
-  String toString() {
-    return " ${qta} : ${p.nome}";
-  }
-}
-
-//costruttore di default per la lista dei prodotti
-List<Prodotto_Quantita> copyList( List<Prodotto> prodotti){
-  List<Prodotto_Quantita> aux = [];
-  for(int i = 0; i<prodotti.length; i++){
-    aux.add(Prodotto_Quantita(p: prodotti[i], qta: 1));
-  }
-  return aux;
-
-}
